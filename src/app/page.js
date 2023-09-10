@@ -1,8 +1,7 @@
 "use client";
 import Shell from "@/components/Shell";
-import Board from "../components/Board";
-import Appbar from "../components/Appbar";
-import Shell from "../components/Shell";
+import Board from "@/components/Board";
+import Appbar from "@/components/Appbar";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
@@ -13,9 +12,8 @@ export default function Home() {
       <Shell>
         <Appbar />
         <Board />
-      <Shell/>
+      </Shell>
     );
   }
   return <Appbar />;
-
 }
