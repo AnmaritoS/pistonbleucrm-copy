@@ -10,7 +10,6 @@ export default function Home() {
   if (session && session.user) {
     return (
       <Shell>
-        <Appbar />
         <Board />
       </Shell>
     );

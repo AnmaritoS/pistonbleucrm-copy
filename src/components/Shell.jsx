@@ -417,19 +417,19 @@ const Shell = ({ children }) => {
               </div>
             </div>
             <Popover>
-              <Popover.Button type="button" class="relative flex mx-3 text-sm bg-bunker-800 rounded-full md:mr-0">
-                <span class="sr-only">Open user menu</span>
-                <img
-                  class="w-8 h-8 rounded-full"
-                  src="https://scontent-cdg4-2.xx.fbcdn.net/v/t1.18169-9/28280025_1712552712123711_3802056644968315147_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=IosDYuMgXZwAX-Z3Lwb&_nc_ht=scontent-cdg4-2.xx&oh=00_AfA8M_H1elDvm4KNI2H0n2dohIbEQXKb8mP3fk_Eo4cQpg&oe=65245F09"
-                  alt="user photo"
-                />
+              <Popover.Button as="button" type="button" class="relative flex mx-3 text-sm bg-bunker-800 rounded-full md:mr-0">
+                <div>
+                  <img class="w-8 h-8 rounded-full" src={user?.image} alt={user?.name} />
+                </div>
               </Popover.Button>
               {/* <!-- Dropdown menu --> */}
-              <Popover.Panel class="absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded-xl divide-y divide-bunker-100 shadow dark:bg-bunker-800 dark:divide-bunker-600">
+              <Popover.Panel
+                as="div"
+                class="absolute right-0 z-50 my-4 w-56 text-base list-none bg-white rounded-xl divide-y divide-bunker-100 shadow dark:bg-bunker-800 dark:divide-bunker-600"
+              >
                 <div class="py-3 px-4">
-                  <span class="block text-sm font-semibold text-bunker-900 dark:text-white">Neil Sims</span>
-                  <span class="block text-sm text-bunker-900 truncate dark:text-white">name@pistonbleu.fr</span>
+                  <span class="block text-sm font-semibold text-bunker-900 dark:text-white">{user?.name}</span>
+                  <span class="block text-sm text-bunker-900 truncate dark:text-white">{user?.email}</span>
                 </div>
                 <ul class="py-3 text-bunker-700 dark:text-bunker-300" aria-labelledby="dropdown">
                   <li>
@@ -510,7 +510,7 @@ const Shell = ({ children }) => {
                 <ul class="py-3 text-bunker-700 dark:text-bunker-300" aria-labelledby="dropdown">
                   <li>
                     <AuthButton
-                      setUser="test"
+                      setUser={setUser}
                       className="inline-block py-2 px-4 text-sm hover:bg-bunker-100 dark:hover:bg-bunker-600 dark:hover:text-white"
                     />
                   </li>
@@ -520,7 +520,6 @@ const Shell = ({ children }) => {
           </div>
         </div>
       </nav>
-
       {/* <!-- Sidebar --> */}
 
       <aside
