@@ -1,10 +1,10 @@
 import React from "react";
-import SigninButton from "./SigninButton";
+import AuthButton from "./AuthButton";
 
 const Appbar = () => {
   return (
     <div className="flex gap-4 p-4 bg-blue-600">
-      <SigninButton />
+      <AuthButton />
     </div>
   );
 };
