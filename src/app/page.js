@@ -1,4 +1,5 @@
 "use client";
+import Shell from "@/components/Shell";
 import Board from "../components/Board";
 import Appbar from "../components/Appbar";
 import Shell from "../components/Shell";
@@ -16,4 +17,5 @@ export default function Home() {
     );
   }
   return <Appbar />;
+
 }

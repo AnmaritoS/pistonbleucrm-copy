@@ -1,102 +1,190 @@
-import PlusIcon from "../icons/PlusIcon";
 import { useMemo, useState } from "react";
-import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
-import {
-  DndContext,
-  DragEndEvent,
-  DragOverEvent,
-  DragOverlay,
-  DragStartEvent,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
+import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import Card from "./Card";
 
 const defaultCols = [
   {
-    id: "todo",
-    title: "Todo",
+    id: "recyler",
+    title: "Recycler",
   },
   {
-    id: "doing",
-    title: "Work in progress",
+    id: "appeler",
+    title: "Appeler",
   },
   {
-    id: "done",
-    title: "Done",
+    id: "qualifie",
+    title: "Qualifié",
+  },
+  {
+    id: "proposer",
+    title: "Proposer",
+  },
+  {
+    id: "negocier",
+    title: "Negocier",
+  },
+  {
+    id: "confirmer",
+    title: "Confirmer",
+  },
+  {
+    id: "close",
+    title: "Closé",
+  },
+  {
+    id: "perdu",
+    title: "Perdu",
   },
 ];
 
 const defaultTasks = [
   {
     id: "1",
-    columnId: "todo",
+    columnId: "appeler",
     content: "List admin APIs for dashboard",
   },
   {
     id: "2",
-    columnId: "todo",
-    content:
-      "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
+    columnId: "appeler",
+    content: "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
   },
   {
     id: "3",
-    columnId: "doing",
+    columnId: "negocier",
     content: "Conduct security testing",
   },
   {
     id: "4",
-    columnId: "doing",
+    columnId: "negocier",
     content: "Analyze competitors",
   },
   {
     id: "5",
-    columnId: "done",
+    columnId: "proposer",
     content: "Create UI kit documentation",
   },
   {
     id: "6",
-    columnId: "done",
+    columnId: "proposer",
     content: "Dev meeting",
   },
   {
     id: "7",
-    columnId: "done",
+    columnId: "proposer",
     content: "Deliver dashboard prototype",
   },
   {
     id: "8",
-    columnId: "todo",
+    columnId: "appeler",
     content: "Optimize application performance",
   },
   {
     id: "9",
-    columnId: "todo",
+    columnId: "appeler",
     content: "Implement data validation",
   },
   {
     id: "10",
-    columnId: "todo",
+    columnId: "appeler",
     content: "Design database schema",
   },
   {
     id: "11",
-    columnId: "todo",
+    columnId: "appeler",
     content: "Integrate SSL web certificates into workflow",
   },
   {
     id: "12",
-    columnId: "doing",
+    columnId: "negocier",
     content: "Implement error logging and monitoring",
   },
   {
     id: "13",
-    columnId: "doing",
+    columnId: "negocier",
     content: "Design and implement responsive UI",
+  },
+  {
+    id: "14",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "15",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "16",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "17",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "18",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "19",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "20",
+    columnId: "negocier",
+    content: "Design and implement responsive UI",
+  },
+  {
+    id: "21",
+    columnId: "appeler",
+    content: "List admin APIs for dashboard",
+  },
+  {
+    id: "22",
+    columnId: "appeler",
+    content: "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
+  },
+  {
+    id: "23",
+    columnId: "negocier",
+    content: "Conduct security testing",
+  },
+  {
+    id: "24",
+    columnId: "negocier",
+    content: "Analyze competitors",
+  },
+  {
+    id: "25",
+    columnId: "proposer",
+    content: "Create UI kit documentation",
+  },
+  {
+    id: "26",
+    columnId: "proposer",
+    content: "Dev meeting",
+  },
+  {
+    id: "27",
+    columnId: "proposer",
+    content: "Deliver dashboard prototype",
+  },
+  {
+    id: "28",
+    columnId: "appeler",
+    content: "Optimize application performance",
+  },
+  {
+    id: "29",
+    columnId: "appeler",
+    content: "Implement data validation",
   },
 ];
 
@@ -126,84 +214,27 @@ function Board() {
       className="
         m-auto
         flex
-        min-h-screen
         w-full
         items-center
         overflow-x-auto
         overflow-y-hidden
-        px-[40px]
     "
     >
-      <DndContext
-        sensors={sensors}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-        onDragOver={onDragOver}
-      >
+      <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
-                <ColumnContainer
-                  key={col.id}
-                  column={col}
-                  deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
-                  createTask={createTask}
-                  deleteTask={deleteTask}
-                  updateTask={updateTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
-                />
+                <ColumnContainer key={col.id} column={col} cards={tasks.filter((task) => task.columnId === col.id)} />
               ))}
             </SortableContext>
           </div>
-          {/* <button
-            onClick={() => {
-              createNewColumn();
-            }}
-            className="
-      h-[60px]
-      w-[350px]
-      min-w-[350px]
-      cursor-pointer
-      rounded-lg
-      bg-mainBackgroundColor
-      border-2
-      border-columnBackgroundColor
-      p-4
-      ring-rose-500
-      hover:ring-2
-      flex
-      gap-2
-      "
-          >
-            <PlusIcon />
-            Add Column
-          </button> */}
         </div>
 
         {createPortal(
           <DragOverlay>
-            {activeColumn && (
-              <ColumnContainer
-                column={activeColumn}
-                deleteColumn={deleteColumn}
-                updateColumn={updateColumn}
-                createTask={createTask}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id
-                )}
-              />
-            )}
-            {activeTask && (
-              <Card
-                task={activeTask}
-                deleteTask={deleteTask}
-                updateTask={updateTask}
-              />
-            )}
+            {activeColumn && <ColumnContainer column={activeColumn} cards={tasks.filter((task) => task.columnId === activeColumn.id)} />}
+            {activeTask && <Card task={activeTask} deleteTask={deleteTask} updateTask={updateTask} />}
           </DragOverlay>,
           document.body
         )}
