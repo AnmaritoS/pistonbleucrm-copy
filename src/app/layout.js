@@ -1,4 +1,6 @@
+import Providers from "@/components/Providers";
 import "./globals.css";
+import Appbar from "@/components/Appbar";
 
 export const metadata = {
   title: "Create Next App",
@@ -8,7 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>
+          {/* <Appbar /> */}
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }
