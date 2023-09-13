@@ -52,23 +52,23 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  secret: process.env.JWT_SECRET,
+  // callbacks: {
+  //   async signIn({ user, account, profile }) {
+  //     console.log;
+  //     if (user.email && user.email.endsWith("@pistonbleu.fr")) {
+  //       const employeeExists = await checkIfEmployeeExists(user.email);
 
-  callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log;
-      if (user.email && user.email.endsWith("@pistonbleu.fr")) {
-        const employeeExists = await checkIfEmployeeExists(user.email);
-
-        if (!employeeExists) {
-          // Create a new employee record
-          await createEmployee(user.email);
-        }
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
+  //       if (!employeeExists) {
+  //         // Create a new employee record
+  //         await createEmployee(user.email);
+  //       }
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);
